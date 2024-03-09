@@ -1,4 +1,13 @@
 return {
+  plugins = {
+    { "mfussenegger/nvim-dap", enabled = true },
+	{--Usado para instalar debuggers automaticamente!
+      "jay-babu/mason-nvim-dap.nvim",
+      opts = {
+        ensure_installed = { "python" }
+      }
+    },
+  },
   -- Configure AstroNvim updates
   updater = {
     remote = "origin", -- remote to use
@@ -18,7 +27,7 @@ return {
   },
 
   -- Set colorscheme to use
-  colorscheme = "astrodark",
+  colorscheme = "kanagawa-dragon",
 
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
