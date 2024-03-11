@@ -17,6 +17,9 @@ return {
   { import = "astrocommunity.editing-support.nvim-regexplainer"},
   { import = "astrocommunity.editing-support.neogen"},
   { import = "astrocommunity.editing-support.hypersonic-nvim"},
-  { import = "astrocommunity.editing-support.chatgpt-nvim"},
+  { import = "astrocommunity.completion.cmp-cmdline"},
+  { import = "astrocommunity.code-runner.compiler-nvim"},
+  { import = "astrocommunity.code-runner.executor-nvim"},
+  { import = "astrocommunity.code-runner.overseer-nvim"},
 }
 
