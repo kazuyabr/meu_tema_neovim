@@ -1,144 +1,101 @@
 return {
+  -- Configuração dos plugins
   plugins = {
+    -- nvim-dap
     { "mfussenegger/nvim-dap", enabled = true },
-	{'Exafunction/codeium.vim', event = 'BufEnter'},
-	{--Usado para instalar debuggers automaticamente!
+    -- codeium.vim para autocompletar
+    { 'Exafunction/codeium.vim', event = 'BufEnter' },
+    -- dressing.nvim para melhorar a UI
+    {
+      'stevearc/dressing.nvim',
+      opts = {
+        select = {
+          enabled = true,
+          backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
+        },
+        input = {
+          enabled = true,
+        },
+      },
+    },
+    -- mason-nvim-dap para gerenciar debuggers
+    {
       "jay-babu/mason-nvim-dap.nvim",
       opts = {
-        ensure_installed = { "python" }
+        ensure_installed = { "python" }, -- Lista de debuggers a serem instalados automaticamente
       }
     },
-  },
-  -- Configure AstroNvim updates
-  updater = {
-    remote = "origin", -- remote to use
-    channel = "stable", -- "stable" or "nightly"
-    version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-    branch = "nightly", -- branch name (NIGHTLY ONLY)
-    commit = nil, -- commit hash (NIGHTLY ONLY)
-    pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
-    skip_prompts = false, -- skip prompts about breaking changes
-    show_changelog = true, -- show the changelog after performing an update
-    auto_quit = false, -- automatically quit the current session after a successful update
-    remotes = { -- easily add new remotes to track
-      --   ["remote_name"] = "https://remote_url.come/repo.git", -- full remote url
-      --   ["remote2"] = "github_user/repo", -- GitHub user/repo shortcut,
-      --   ["remote3"] = "github_user", -- GitHub user assume AstroNvim fork
-    },
+    -- Adicione mais plugins conforme necessário
   },
 
-  -- Set colorscheme to use
+  -- Configuração do atualizador do AstroNvim
+  updater = {
+    remote = "origin",
+    channel = "stable",
+    version = "latest",
+    branch = "nightly",
+    commit = nil,
+    pin_plugins = nil,
+    skip_prompts = false,
+    show_changelog = true,
+    auto_quit = false,
+    remotes = {},
+  },
+
+  -- Definindo o esquema de cores
   colorscheme = "kanagawa-dragon",
 
-  -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
+  -- Configurações de diagnóstico
   diagnostics = {
     virtual_text = true,
     underline = true,
   },
 
+  -- Configurações do LSP
   lsp = {
-    -- customize lsp formatting options
     formatting = {
-      -- control auto formatting on save
       format_on_save = {
-        enabled = true, -- enable or disable format on save globally
-        allow_filetypes = { -- enable format on save for specified filetypes only
-          -- "go",
-        },
-        ignore_filetypes = { -- disable format on save for specified filetypes
-          -- "python",
-        },
+        enabled = true,
+        allow_filetypes = {},
+        ignore_filetypes = {},
       },
-      disabled = { -- disable formatting capabilities for the listed language servers
-        -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
-        -- "lua_ls",
-      },
-      timeout_ms = 1000, -- default format timeout
-      -- filter = function(client) -- fully override the default formatting function
-      --   return true
-      -- end
+      disabled = {},
+      timeout_ms = 1000,
     },
-    -- enable servers that you already have installed without mason
-    servers = {
-      -- "pyright"
-    },
+    servers = {},
   },
 
-  -- Configure require("lazy").setup() options
+  -- Configurações adicionais do lazy
   lazy = {
     defaults = { lazy = true },
     performance = {
       rtp = {
-        -- customize default disabled vim plugins
         disabled_plugins = { "tohtml", "gzip", "matchit", "zipPlugin", "netrwPlugin", "tarPlugin" },
       },
     },
   },
 
+  -- Ícones personalizados
   icons = {
     ActiveLSP = "",
-    ActiveTS = "",
-    ArrowLeft = "",
-    ArrowRight = "",
-    BufferClose = "󰅖",
-    DapBreakpoint = "",
-    DapBreakpointCondition = "",
-    DapBreakpointRejected = "",
-    DapLogPoint = ".>",
-    DapStopped = "󰁕",
-    DefaultFile = "󰈙",
-    Diagnostic = "󰒡",
-    DiagnosticError = "",
-    DiagnosticHint = "󰌵",
-    DiagnosticInfo = "󰋼",
-    DiagnosticWarn = "",
-    Ellipsis = "…",
-    FileModified = "",
-    FileReadOnly = "",
-    FoldClosed = "",
-    FoldOpened = "",
-    FoldSeparator = " ",
-    FolderClosed = "",
-    FolderEmpty = "",
-    FolderOpen = "",
-    Git = "󰊢",
-    GitAdd = "",
-    GitBranch = "",
-    GitChange = "",
-    GitConflict = "",
-    GitDelete = "",
-    GitIgnored = "◌",
-    GitRenamed = "➜",
-    GitStaged = "✓",
-    GitUnstaged = "✗",
-    GitUntracked = "★",
-    LSPLoaded = "",
-    LSPLoading1 = "",
-    LSPLoading2 = "󰀚",
-    LSPLoading3 = "",
-    MacroRecording = "",
-    Paste = "󰅌",
-    Search = "",
-    Selected = "❯",
-    Spellcheck = "󰓆",
-    TabClose = "󰅙",
+    -- Adicione mais ícones conforme necessário
   },
 
-  -- This function is run last and is a good place to configuring
-  -- augroups/autocommands and custom filetypes also this just pure lua so
-  -- anything that doesn't fit in the normal config locations above can go here
+  -- Função polish para configurações finais
   polish = function()
-    -- Set up custom filetypes
-    -- vim.filetype.add {
-    --   extension = {
-    --     foo = "fooscript",
-    --   },
-    --   filename = {
-    --     ["Foofile"] = "fooscript",
-    --   },
-    --   pattern = {
-    --     ["~/%.config/foo/.*"] = "fooscript",
-    --   },
-    -- }
+    -- Configurações que devem ser aplicadas após o carregamento completo
+    vim.api.nvim_create_autocmd("VimEnter", {
+      callback = function()
+        -- Configuração do tema Kanagawa
+        require('user.config.kanagawa')
+
+        -- Configuração do Dressing
+        require('user.config.dressing')
+
+        -- Configuração do browse.nvim
+        require('user.config.browse')
+
+      end
+    })
   end,
 }
