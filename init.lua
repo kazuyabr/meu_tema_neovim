@@ -94,6 +94,9 @@ return {
 
         -- Configuração do browse.nvim
         require('user.config.browse')
+		
+		-- Configuração sourcegraph CODY copilot
+		require('user.config.sourcegraph')
 
       end
     })
